@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "tsc": "tsc --noEmit --project tsconfig.app.json"
   },
   "dependencies": {
     "@tanstack/react-router": "^1.120.3",
