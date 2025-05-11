@@ -23,4 +23,5 @@ dist-ssr
 *.sln
 *.sw?
 
+public/mockServiceWorker.js
 src/routeTree.gen.ts
