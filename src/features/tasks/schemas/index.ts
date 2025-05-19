@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import type { Task } from '../types';
 
-export const taskShema = z.object({
+export const taskSchema = z.object({
   id: z.string(),
   title: z.string().min(1).max(50),
   description: z.string().max(1000),
