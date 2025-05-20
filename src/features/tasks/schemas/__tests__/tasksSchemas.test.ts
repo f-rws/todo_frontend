@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { taskSchemaId } from '..';
+import { taskSchemaId, taskSchemaTitle } from '..';
 import type { Task } from '../../types';
 
 const validTask = {
@@ -12,12 +12,13 @@ const validTask = {
   expiredAt: '2025-01-15',
 } satisfies Task;
 
+type TestCase = {
+  value: unknown;
+  expected: ReturnType<(typeof taskSchemaId)['safeParse']>['success'];
+  description: string;
+};
+
 describe.concurrent('taskSchemaIdのテスト', () => {
-  type TestCase = {
-    value: unknown;
-    expected: ReturnType<(typeof taskSchemaId)['safeParse']>['success'];
-    description: string;
-  };
   const cases: TestCase[] = [
     { value: validTask.id, expected: true, description: '有効な値' },
     { value: '', expected: true, description: '空文字を許容' },
@@ -26,5 +27,19 @@ describe.concurrent('taskSchemaIdのテスト', () => {
 
   test.for(cases)('$description $value -> $expected', ({ value, expected }) => {
     expect(taskSchemaId.safeParse(value).success).toBe(expected);
+  });
+});
+
+describe.concurrent('taskSchemaTitleのテスト', () => {
+  const cases: TestCase[] = [
+    { value: validTask.title, expected: true, description: '有効な値' },
+    { value: '', expected: false, description: '空文字は許容しない' },
+    { value: 'a', expected: true, description: '最短1文字' },
+    { value: 'a'.repeat(50), expected: true, description: '最長50文字' },
+    { value: 'a'.repeat(51), expected: false, description: '51文字以上は許容しない' },
+  ];
+
+  test.for(cases)('$description $value -> $expected', ({ value, expected }) => {
+    expect(taskSchemaTitle.safeParse(value).success).toBe(expected);
   });
 });

@@ -2,10 +2,11 @@ import { z } from 'zod';
 import type { Task } from '../types';
 
 export const taskSchemaId = z.string();
+export const taskSchemaTitle = z.string().min(1).max(50);
 
 export const taskSchema = z.object({
   id: taskSchemaId,
-  title: z.string().min(1).max(50),
+  title: taskSchemaTitle,
   description: z.string().max(1000),
   status: z.enum(['notStarted', 'inProgress', 'completed']),
   createdAt: z.string().datetime(),
