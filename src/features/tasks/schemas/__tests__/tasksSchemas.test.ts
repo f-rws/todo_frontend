@@ -7,6 +7,7 @@ import {
   taskSchemaCreatedAt,
   taskSchemaUpdatedAt,
   taskSchemaExpiredAt,
+  taskSchema,
 } from '..';
 import type { Task } from '../../types';
 
@@ -133,5 +134,27 @@ describe.concurrent('taskSchemaExpiredAtのテスト', () => {
 
   test.for(cases)('$description $value -> $expected', ({ value, expected }) => {
     expect(taskSchemaExpiredAt.safeParse(value).success).toBe(expected);
+  });
+});
+
+describe.concurrent('taskSchemaのテスト', () => {
+  const taskWithoutExpiredAt: Partial<Task> = {
+    id: validTask.id,
+    title: validTask.id,
+    description: validTask.id,
+    status: validTask.status,
+    createdAt: validTask.createdAt,
+    updatedAt: validTask.updatedAt,
+  };
+  const cases: TestCase[] = [
+    { value: { ...validTask }, expected: true, description: '有効な値' },
+    { value: taskWithoutExpiredAt, expected: false, description: 'プロパティが不足しているtask' },
+    { value: {}, expected: false, description: '空オブジェクトは許容しない' },
+    { value: undefined, expected: false, description: 'undefinedは許容しない' },
+    { value: null, expected: false, description: 'undefinedは許容しない' },
+  ];
+
+  test.for(cases)('$description $value -> $expected', ({ value, expected }) => {
+    expect(taskSchema.safeParse(value).success).toBe(expected);
   });
 });
