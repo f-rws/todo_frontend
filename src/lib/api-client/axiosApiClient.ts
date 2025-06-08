@@ -1,7 +1,7 @@
 import axios from 'axios';
 import type { ApiClient, ApiError } from './types';
 
-const axiosInstance = axios.create({
+export const axiosInstance = axios.create({
   baseURL: '/',
   headers: {
     'Content-Type': 'application/json',

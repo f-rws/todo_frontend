@@ -3,7 +3,7 @@ export type ApiError = {
   message: string;
   error: unknown;
 };
-type ApiResponse<T> =
+export type ApiResponse<T> =
   | {
       data: T;
       error?: undefined;
