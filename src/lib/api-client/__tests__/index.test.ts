@@ -41,4 +41,39 @@ describe('apiClientのテスト', () => {
       });
     });
   });
+
+  describe('post', () => {
+    it('正常系', async () => {
+      const mockRequestData = { testKey: 'testValue' };
+      vi.spyOn(axiosInstance, 'post').mockResolvedValue({ data: null });
+
+      const response = await apiClient.post('/tasks/', mockRequestData);
+
+      expect(response.data).toEqual(null);
+      expect(response.error).toBeUndefined();
+    });
+
+    it('異常系', async () => {
+      const mockRequestData = { testKey: 'testValue' };
+      const mockStatus = 500;
+      const mockMessage = 'Internal Server Error';
+      const mockAxiosError: MockAxiosError = {
+        isAxiosError: true,
+        response: {
+          status: mockStatus,
+        },
+        message: mockMessage,
+      };
+      vi.spyOn(axiosInstance, 'post').mockRejectedValue(mockAxiosError);
+
+      const response = await apiClient.post('/task/', mockRequestData);
+
+      expect(response.data).toBeUndefined();
+      expect(response.error).toEqual({
+        status: mockStatus,
+        message: mockMessage,
+        error: mockAxiosError,
+      });
+    });
+  });
 });
