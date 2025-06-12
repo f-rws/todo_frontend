@@ -66,7 +66,41 @@ describe('apiClientのテスト', () => {
       };
       vi.spyOn(axiosInstance, 'post').mockRejectedValue(mockAxiosError);
 
-      const response = await apiClient.post('/task/', mockRequestData);
+      const response = await apiClient.post('/tasks/', mockRequestData);
+
+      expect(response.data).toBeUndefined();
+      expect(response.error).toEqual({
+        status: mockStatus,
+        message: mockMessage,
+        error: mockAxiosError,
+      });
+    });
+  });
+
+  describe('put', () => {
+    it('正常系', async () => {
+      const mockRequestData = { testKey: 'testValue' };
+      vi.spyOn(axiosInstance, 'put').mockResolvedValue({ data: null });
+
+      const response = await apiClient.put('/tasks/', mockRequestData);
+
+      expect(response.data).toEqual(null);
+      expect(response.error).toBeUndefined();
+    });
+    it('異常系', async () => {
+      const mockRequestData = { testKey: 'testValue' };
+      const mockStatus = 500;
+      const mockMessage = 'Internal Server Error';
+      const mockAxiosError: MockAxiosError = {
+        isAxiosError: true,
+        response: {
+          status: mockStatus,
+        },
+        message: mockMessage,
+      };
+      vi.spyOn(axiosInstance, 'put').mockRejectedValue(mockAxiosError);
+
+      const response = await apiClient.put('/tasks/', mockRequestData);
 
       expect(response.data).toBeUndefined();
       expect(response.error).toEqual({
