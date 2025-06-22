@@ -1,4 +1,5 @@
 import type { ApiError } from '@/lib/api-client/types';
+import type { AsyncReturnType } from '@/lib/types';
 import { createMockTask } from '../../mocks';
 import { createTasksRepository, TasksApiException } from '..';
 import type { TasksRepository } from '..';
@@ -21,7 +22,7 @@ const mockApiError: ApiError = {
 describe('createTasksRepository', () => {
   describe('getAll', () => {
     it('正常系', async () => {
-      const mockResponse: Awaited<ReturnType<TasksRepository['getAll']>> = [createMockTask()];
+      const mockResponse: AsyncReturnType<TasksRepository['getAll']> = [createMockTask()];
       mockApiClient.get.mockResolvedValueOnce({ data: mockResponse });
 
       const tasksRepository = createTasksRepository(mockApiClient);
