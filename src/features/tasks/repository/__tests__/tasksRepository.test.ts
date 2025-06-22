@@ -1,6 +1,7 @@
 import type { ApiError } from '@/lib/api-client/types';
 import { createTasksRepository, TasksApiException } from '..';
 import type { TasksRepository } from '../types';
+import { createMockTask } from '../../mocks';
 
 const mockApiClient = {
   get: vi.fn(),
@@ -12,25 +13,15 @@ const mockApiClient = {
 const mockApiErrorStatus = 500;
 const mockApiErrorMessage = 'Internal Server Error';
 const mockApiError: ApiError = {
-    status: mockApiErrorStatus,
-    message: mockApiErrorMessage,
-    error: {}
+  status: mockApiErrorStatus,
+  message: mockApiErrorMessage,
+  error: {},
 };
 
 describe('createTasksRepository', () => {
   describe('getAll', () => {
     it('正常系', async () => {
-      const mockResponse: Awaited<ReturnType<TasksRepository['getAll']>> = [
-        {
-          id: '0001',
-          title: 'タスクのタイトル',
-          description: 'タスクの詳細',
-          status: 'completed',
-          createdAt: '2025-05-01T12:00:00.000Z',
-          updatedAt: '2025-05-01T12:00:00.000Z',
-          expiredAt: '2025-06-01T12:00:00.000Z',
-        },
-      ];
+      const mockResponse: Awaited<ReturnType<TasksRepository['getAll']>> = [createMockTask()];
       mockApiClient.get.mockResolvedValueOnce({ data: mockResponse });
 
       const tasksRepository = createTasksRepository(mockApiClient);
