@@ -21,3 +21,5 @@ export function createTasksRepository(apiClient: ApiClient): TasksRepository {
     },
   };
 }
+
+export * from './types.ts';

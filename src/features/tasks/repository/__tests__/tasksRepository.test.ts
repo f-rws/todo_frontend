@@ -1,7 +1,7 @@
 import type { ApiError } from '@/lib/api-client/types';
-import { createTasksRepository, TasksApiException } from '..';
-import type { TasksRepository } from '../types';
 import { createMockTask } from '../../mocks';
+import { createTasksRepository, TasksApiException } from '..';
+import type { TasksRepository } from '..';
 
 const mockApiClient = {
   get: vi.fn(),

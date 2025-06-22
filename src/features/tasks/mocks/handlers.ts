@@ -1,5 +1,5 @@
 import { http, HttpResponse } from 'msw';
-import type { TasksRepository } from '../repository/types';
+import type { TasksRepository } from '../repository';
 import { createMockTask } from '.';
 
 const getAllMockData: Awaited<ReturnType<TasksRepository['getAll']>> = [
