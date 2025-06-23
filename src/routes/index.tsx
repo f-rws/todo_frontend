@@ -5,7 +5,6 @@ export const Route = createFileRoute('/')({
 });
 
 function Index() {
-  console.log('index');
   return (
     <>
       <div>Home</div>
