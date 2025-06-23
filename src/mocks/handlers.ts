@@ -1,3 +1,3 @@
-import { tasksHandlers } from './tasks/handlers';
+import { tasksHandlers } from '@/features/tasks/mocks/handlers';
 
 export const handlers = [...tasksHandlers];
